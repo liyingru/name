@@ -19,7 +19,22 @@
 
 <body>
     <div class="wrapper">
-
+        <header>
+            <div class="bst">
+                <span class="active">推荐</span>
+                <span>女装</span>
+                <span>美食</span>
+                <span>居家</span>
+                <span>美妆个户</span>
+                <span>男装</span>
+                <span>内衣</span>
+                <span>鞋</span>
+                <span>推荐</span>
+                <span>女装</span>
+                <span>美食</span>
+                <span>居家</span>
+            </div>
+        </header>
         <section>
             <div class="bancon">
                 <span><img src="images/1.png">热销爆款</span>
@@ -88,6 +103,13 @@
     </div>
 </body>
 <script>
+    var Bscroll = new BScroll('header', {
+        scrollX: true,
+        click: true
+    });
+    $('.bst span').on('click', function() {
+        $(this).addClass('active').siblings().removeClass('active');
+    });
     var mySwiper = new Swiper('.swiper-container', {
         slidePerview: 1,
         autoplay: true,

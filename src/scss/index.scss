@@ -33,6 +33,29 @@ body {
     @include direction(column);
 }
 
+header {
+    width: 100%;
+    height: pxTorem(44px);
+    @include box_flex;
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+    .bst {
+        @include box_flex;
+        width: 150%;
+        span {
+            display: inline-block;
+            height: pxTorem(40px);
+            width: pxTorem(120px);
+            line-height: pxTorem(44px);
+            text-align: center;
+        }
+        .active {
+            color: red;
+            border-bottom: 1px solid red;
+        }
+    }
+}
+
 section {
     width: 100%;
     @include flex;
