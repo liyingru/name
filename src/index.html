@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="scss/index.css">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <link rel="stylesheet" href="swiper4/swiper-4.3.5.min.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/better-scroll.js"></script>
+    <script src="js/flexible.js"></script>
+    <script src="js/zepto.js"></script>
+    <script src="iconfont/iconfont.js"></script>
+    <script src="swiper4/swiper-4.3.5.min.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <section>
+            <div class="bancon">
+                <span><img src="images/1.png">热销爆款</span>
+                <span>共234款</span>
+            </div>
+            <div class="banner">
+                <div class="swiper-container">
+                    <ul class="swiper-wrapper">
+                        <li class="swiper-slide">
+                            <img src="images/banner.png" alt="">
+                        </li>
+                        <li class="swiper-slide">
+                            <img src="images/banner2.png" alt="">
+                        </li>
+                    </ul>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+            <h4>-单选单品-</h4>
+            <div class="content">
+                <dl>
+                    <dt><img src="images/pic1.png"></dt>
+                    <dd>
+                        <p>苹果数据线</p>
+                        <p>￥1.9</p>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt><img src="images/pic2.png"></dt>
+                    <dd>
+                        <p>苹果数据线</p>
+                        <p>￥9.9</p>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt><img src="images/pic1.png"></dt>
+                    <dd>
+                        <p>苹果数据线</p>
+                        <p>￥1.9</p>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt><img src="images/pic2.png"></dt>
+                    <dd>
+                        <p>苹果数据线</p>
+                        <p>￥9.9</p>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt><img src="images/pic1.png"></dt>
+                    <dd>
+                        <p>苹果数据线</p>
+                        <p>￥1.9</p>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt><img src="images/pic2.png"></dt>
+                    <dd>
+                        <p>苹果数据线</p>
+                        <p>￥1.9</p>
+                    </dd>
+                </dl>
+            </div>
+        </section>
+
+    </div>
+</body>
+<script>
+    var mySwiper = new Swiper('.swiper-container', {
+        slidePerview: 1,
+        autoplay: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+        }
+    });
+</script>
+
+</html>
