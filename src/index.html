@@ -99,7 +99,28 @@
                 </dl>
             </div>
         </section>
-
+        <footer>
+            <dl>
+                <dt class="iconfont">&#xe711;</dt>
+                <dd>首页</dd>
+            </dl>
+            <dl>
+                <dt class="iconfont">&#xe633;</dt>
+                <dd>分类</dd>
+            </dl>
+            <dl>
+                <dt class="iconfont">&#xe71a;</dt>
+                <dd>品牌特惠</dd>
+            </dl>
+            <dl class="act">
+                <dt class="iconfont">&#xe75f;</dt>
+                <dd>5元包邮</dd>
+            </dl>
+            <dl>
+                <dt class="iconfont">&#xe725;</dt>
+                <dd>我的</dd>
+            </dl>
+        </footer>
     </div>
 </body>
 <script>
@@ -118,6 +139,9 @@
             clickable: true
         }
     });
+    $('footer dl').on('click', function() {
+        $(this).addClass('act').siblings().removeClass('act');
+    })
 </script>
 
 </html>

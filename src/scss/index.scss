@@ -151,3 +151,25 @@ section {
         }
     }
 }
+
+footer {
+    @include box_flex;
+    width: 100%;
+    height: pxTorem(50px);
+    @include align;
+    border-top: 2px solid #ccc;
+    @include flex-shrink(0);
+    dl {
+        @include flex;
+        @include box_flex;
+        @include direction(column);
+        @include align;
+        @include justify;
+        dt.iconfont {
+            font-size: pxTorem(20px);
+        }
+    }
+    .act {
+        color: red;
+    }
+}
