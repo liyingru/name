@@ -1,0 +1,95 @@
+@import "./../components/List/list.wxss";
+.search-box {
+  display: flex;
+  padding: 0 10px;
+  box-sizing: border-box;
+  height: 45px;
+  align-items: center;
+  justify-content: space-between;
+}
+.search-box input {
+  width: 70%;
+  height: 30px;
+  border-radius: 20px;
+  background: #eee;
+  padding-left: 20px;
+}
+.search-box .place {
+  color: #666;
+  font-size: 14px;
+}
+.search-box button {
+  width: 25%;
+  flex-shrink: 0;
+  margin-left: 10px;
+}
+.search-history {
+  padding: 15px 10px;
+  box-sizing: border-box;
+  z-index: 888;
+}
+.search-history .history-search {
+  color: #ccc;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.search-history .history-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.search-history .history-list test {
+  display: inline-block;
+  background: #eee;
+  color: #666;
+  height: 30px;
+  padding: 0 10px;
+  line-height: 30px;
+  margin-right: 10px;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.search-list {
+  position: absolute;
+  top: 45px;
+  width: 100%;
+  background: #fff;
+  padding-left: 10px;
+  z-index: 9999;
+}
+.search-list view {
+  height: 45px;
+  line-height: 45px;
+  font-size: 14px;
+}
+.content {
+  padding: 10px;
+  box-sizing: border-box;
+}
+.people {
+  padding: 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #eee;
+}
+.people > view {
+  display: flex;
+  height: 45px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.people > view .peo-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+}
+.people > view .peo-img image {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+}
+.people > view .peo {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #666;
+}

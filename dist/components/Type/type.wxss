@@ -1,0 +1,14 @@
+.subtype {
+  white-space: nowrap;
+  font-size: 14px;
+  width: 300px;
+}
+.subtype view {
+  margin-right: 10px;
+  flex-shrink: 0;
+  display: inline-block;
+  padding: 0 10px;
+}
+.subtype view.active {
+  color: #AC8943;
+}

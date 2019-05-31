@@ -1,0 +1,95 @@
+<style lang="less">
+@import "./assets/icon/iconfont.wxss";
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+page {
+  width: 100%;
+  height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+</style>
+
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+
+import { setStore } from 'wepy-redux'
+import configStore from './store'
+
+const store = configStore()
+setStore(store)
+
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/index',
+      'pages/remark',
+      'pages/video',
+      'pages/mine',
+      'pages/Carsoul',
+      'pages/detail',
+      'pages/search',
+      'pages/classify',
+      'pages/daily'
+    ],
+    window: {
+      backgroundTextStyle: 'dark',
+      navigationBarBackgroundColor: '#fff',
+      navigationBarTitleText: 'WeChat',
+      navigationBarTextStyle: 'black',
+      enablePullDownRefresh: true
+    },
+    tabBar: {
+      list: [
+        {
+          pagePath: 'pages/index',
+          text: '首页',
+          iconPath: 'assets/image/home.png',
+          selectedIconPath: 'assets/image/homeSelected.png'
+        },
+        {
+          pagePath: 'pages/remark',
+          text: '影评',
+          iconPath: 'assets/image/remark.png',
+          selectedIconPath: 'assets/image/remarkSelected.png'
+        },
+        {
+          pagePath: 'pages/video',
+          text: '视频',
+          iconPath: 'assets/image/videoSelected.png',
+          selectedIconPath: 'assets/image/video.png'
+        },
+        {
+          pagePath: 'pages/mine',
+          text: '我的',
+          iconPath: 'assets/image/mine.png',
+          selectedIconPath: 'assets/image/mineSelected.png'
+        }
+      ]
+    }
+  }
+
+  globalData = {
+    scroll_height: 0,
+    cardsList: []
+  }
+
+  constructor () {
+    super()
+    this.use('requestfix')
+    this.use('promisify')
+  }
+
+  onLaunch() {
+    
+  }
+}
+</script>

@@ -1,0 +1,32 @@
+<!--  -->
+<template>
+  <view class='container'>视频</view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  export default class Example extends wepy.page {
+    config = {
+      navigationBarTitleText: "毒舌视频",
+    };
+
+    data = {};
+
+    components = {};
+
+    methods = {};
+
+    events = {};
+
+    watch = {};
+
+    computed = {};
+
+    onLoad() { };
+
+    onShow() { };
+  }
+</script>
+
+<style lang='less'>
+</style>

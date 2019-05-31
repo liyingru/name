@@ -1,0 +1,90 @@
+<!--  -->
+<template>
+  <view class='con' wx:if="{{movieList.length}}">
+      <repeat for="{{movieList}}">
+            <view class="content-item">
+                  <view class="content-img">
+                    <image src="{{item.movieInfo.img}}"/>
+                </view>
+                <view class="content-text">
+                    <text class="name">{{item.movieInfo.title}}</text>
+                    <view class="type">
+                        {{item.movieInfo.year}}
+                        <repeat for="{{item.movieInfo.type}}">
+                            <text>{{item}}/ </text>
+                        </repeat>
+                    </view>
+                    <view class="people">
+                        <repeat for="{{item.actorBasicInfoList}}" item="val">
+                            <text>{{val.name}}/</text>
+                        </repeat>
+                    </view>
+                </view>
+          </view>
+        </repeat>
+  </view>
+  <view wx:else>暂无数据……</view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  export default class Example extends wepy.component {
+    props = {
+        movieList: Array
+    };
+
+    data = {};
+
+    components = {};
+
+    methods = {
+        
+    };
+
+    events = {};
+
+    watch = {};
+
+    computed = {};
+
+    onLoad() { };
+
+    onShow() { };
+  }
+</script>
+
+<style lang='less'>
+    .con {
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    .content-item {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .content-img {
+            width: 80px;
+            height: 100px;
+            margin-right: 15px;
+            image {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .content-text {
+            flex: 1;
+            color: #ccc;
+            font-size: 12px;
+            .name {
+                color: #000;
+                font-size: 15px;
+            }
+            .type, .people {
+                margin-top: 5px;
+                width: 100px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+</style>

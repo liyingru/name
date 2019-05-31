@@ -1,0 +1,129 @@
+
+  <view class="container">
+    <view class="search-wrap">
+        <view class="search-box">
+          <text class="iconfont icon-search"/>
+          <input type="text" placeholder="找影片、导演、演员、影评" class="ipt-box" bindfocus="gotoSearch"/>
+        </view>
+    </view>
+    <scroll-view class="section" scroll-y style="height:{{scroll_height}}rpx">
+        <!-- banner -->
+      
+  <view class="swiper-box">
+      <swiper autoplay circular="circular" bindchange="$Swiper$change">
+          <block wx:for="{{$Swiper$swiperData}}" wx:for-index="$Swiper$index" wx:for-item="$Swiper$item" wx:key="$Swiper$key">
+              <swiper-item class="swiper-item">
+                  <image src="{{$Swiper$item.imageUrl}}"/>
+              </swiper-item>
+          </block>
+      </swiper>
+      <view class="dots">
+        <block wx:for="{{$Swiper$swiperData}}" wx:for-index="$Swiper$index" wx:for-item="$Swiper$item" wx:key="$Swiper$key">
+            <view class="dot {{$Swiper$currentIndex === $Swiper$index ? 'active' : ''}}"/>
+        </block>
+    </view>
+  </view>
+
+      <!-- nav -->
+      <view class="nav-box">
+          <view class="navlist-item" bindtap="con_dialog">
+            <view class="icon" style="background: #FFA27C">
+              <text class="iconfont icon-linedesign-18"/>
+            </view>
+            <text class="navlist-text">海报日签</text>
+          </view>
+          <view class="navlist-item">
+            <view class="icon" style="background: #FEAC10">
+              <text class="iconfont icon-tequanmianfeiguanyinghd"/>
+            </view>
+            <text class="navlist-text">免费观影</text>
+          </view>
+          <view class="navlist-item" bindtap="gotoClassify">
+            <view class="icon" style="background: #56ACFF">
+              <text class="iconfont icon-zhaodian"/>
+            </view>
+            <text class="navlist-text">找电影</text>
+          </view>
+      </view>
+
+      <!-- 今日精选视频 -->
+      <view class="choiceness">
+        <view class="choiceness-title">今日精选视频</view>
+        <view class="choiceness-list">
+            <block wx:for="{{choiceness}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+                <view class="choiceness-list-item">
+                  <video src="{{item.videoInfo.videoUrl}}" class="video"/>
+                  <view class="choiceness-desc">{{item.videoInfo.title}}</view>
+                </view>
+                
+            </block>
+        </view>
+      </view>
+      <!-- 这周影院有啥看 -->
+      
+  <view class="weekday">
+    <view class="weekday-title">{{$Content1$weekData.name}}</view>
+    <scroll-view class="weekday-list" scroll-x>
+        <block wx:for="{{$Content1$weekData.movieDataList}}" wx:for-index="$Content1$index" wx:for-item="$Content1$item" wx:key="$Content1$key">
+            <view class="weekday-list-item" bindtap="$Content1$gotoDetail" data-wpygotodetail-a="{{$Content1$item}}">
+                <view class="weekday-img">
+                <image src="{{$Content1$item.movieInfo.img}}"/>
+                </view>
+                <view class="weekday-tit">{{$Content1$item.movieInfo.title}}</view>
+                <view class="weekday-intro">{{$Content1$item.movieInfo.intro}}</view>
+            </view>
+        </block>
+    </scroll-view>
+</view>
+
+
+      <!-- 近期热播剧 -->
+      
+  <view class="weekday">
+    <view class="weekday-title">{{$Content2$weekData.name}}</view>
+    <scroll-view class="weekday-list" scroll-x>
+        <block wx:for="{{$Content2$weekData.movieDataList}}" wx:for-index="$Content2$index" wx:for-item="$Content2$item" wx:key="$Content2$key">
+            <view class="weekday-list-item" bindtap="$Content2$gotoDetail" data-wpygotodetail-a="{{$Content2$item}}">
+                <view class="weekday-img">
+                <image src="{{$Content2$item.movieInfo.img}}"/>
+                </view>
+                <view class="weekday-tit">{{$Content2$item.movieInfo.title}}</view>
+                <view class="weekday-intro">{{$Content2$item.movieInfo.intro}}</view>
+            </view>
+        </block>
+    </scroll-view>
+</view>
+
+      <!-- 近期综艺 -->
+      
+  <view class="weekday">
+    <view class="weekday-title">{{$Content3$weekData.name}}</view>
+    <scroll-view class="weekday-list" scroll-x>
+        <block wx:for="{{$Content3$weekData.movieDataList}}" wx:for-index="$Content3$index" wx:for-item="$Content3$item" wx:key="$Content3$key">
+            <view class="weekday-list-item" bindtap="$Content3$gotoDetail" data-wpygotodetail-a="{{$Content3$item}}">
+                <view class="weekday-img">
+                <image src="{{$Content3$item.movieInfo.img}}"/>
+                </view>
+                <view class="weekday-tit">{{$Content3$item.movieInfo.title}}</view>
+                <view class="weekday-intro">{{$Content3$item.movieInfo.intro}}</view>
+            </view>
+        </block>
+    </scroll-view>
+</view>
+
+    </scroll-view>
+
+    
+  <view class="dialog-wrapper" hidden="{{$Dialog$flag}}">
+      <view class="mask"/>
+      <view class="dialog">
+          <image src="../assets/image/bg.png"/>
+          <view class="btns">
+              <button size="mini" bindtap="$Dialog$gotoDaily">日签</button>
+              <button size="mini" open-type="share">分享</button>
+          </view>
+          <view class="close" bindtap="$Dialog$close">×</view>
+      </view>
+  </view>
+
+  </view>

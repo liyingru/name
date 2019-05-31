@@ -1,0 +1,250 @@
+<!--  -->
+<template>
+  <view class='search-wrapper'>
+      <view class="search-box">
+          <input type="text" placeholder="找影片、导演、演员、影评"  auto-focus="true" placeholder-class="place" @input="iptFunc" />
+          <button size="mini" @tap="search({{iptVal}})">搜索</button>
+
+          <view class="search-list" hidden="{{iptflag}}">
+              <repeat for="{{iptArr}}">
+                  <view @tap="search({{item.movieInfo.title}})">{{item.movieInfo.title}}</view>
+              </repeat>
+          </view>
+      </view>
+      <view class="isShow" hidden="{{flag}}">
+          <view class="search-history" hidden="{{!storage.length}}">
+            <view class="history-search">历史搜索</view>
+            <view class="history-list">
+                <repeat for="{{storage}}">
+                    <test @tap="search({{item}})">{{item}}</test>
+                </repeat>
+            </view>
+      </view>
+      <view class="search-history search-hot">
+          <view class="history-search hot-search">热门搜索</view>
+          <view class="history-list hot-list">
+              <repeat for="{{hotList}}">
+                    <test @tap="search({{item}})">{{item}}</test>
+              </repeat>
+          </view>
+      </view>
+      </view>
+      <scroll-view class="content" hidden="{{!flag}}" scroll-y style="height: {{h}}rpx">
+          <view class="people" wx:if="{{moviePeople.length > 0}}">
+              <view>影人</view>
+              <repeat for="{{moviePeople}}">
+                  <view>
+                      <view class="peo-img"><image src="{{item.moviePersonInfo.img}}"/></view>
+                      <view class="peo">{{item.moviePersonInfo.name}}</view>
+                  </view>
+              </repeat>
+          </view>
+          <view>影视</view>
+          <List :movieList.sync="movieList"/>
+      </scroll-view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import List from '../components/List/list';
+  export default class Example extends wepy.page {
+    config = {
+      navigationBarTitleText: "搜资源",
+    };
+
+    data = {
+        hotList: ["碟中谍", "苹果", "狄仁杰", "斗破苍穹", "如懿传", "人类清除计划", "遗传厄运", "天成唱歌", "疯人院", "快把我哥带走"],
+        flag: false,
+        iptVal: '',
+        movieList: null,
+        moviePeople: null,
+        storage: [],
+        timer: null,
+        iptArr: [],
+        iptflag: true,
+        h: 0
+    };
+
+    components = {
+        List
+    };
+
+    fetchData(url, v) {
+        return wepy.request({
+            url,
+            method: 'POST',
+            data: {
+                count: 5,
+                key: v,
+                startIndex: 0,
+                userId: 5933871,
+                sign: '20469378ebafade92cc857206d134de1'
+            }
+        })
+    }
+    methods = {
+        iptFunc(e) {
+            this.iptVal = e.detail.value;
+            this.iptflag = false;
+            clearTimeout(this.timer);
+            this.timer = setTimeout(() => {
+                if (this.iptVal !== '') {
+                    this.fetchData('https://dswxapp.dushemovie.com/dsmovieapi/ssl2/search/search_movie/1', this.iptVal).then(res => {
+                        this.iptArr = res.data.movieDataList;
+                        this.$apply();
+                    })
+                }
+            }, 500);
+        },
+
+        search(v) {
+            this.flag = true;
+            this.iptflag = true;
+            // this.fetchData('https://dswxapp.dushemovie.com/dsmovieapi/ssl2/search/search_movie/1', v).then(res => {
+            //     this.movieList = res.data.movieDataList;
+            //     this.$apply();
+            // })
+
+            let movieData = this.fetchData('https://dswxapp.dushemovie.com/dsmovieapi/ssl2/search/search_movie/1', v);
+            let peopleData = this.fetchData('https://dswxapp.dushemovie.com/dsmovieapi/ssl2/search/search_movie_person/1', v);
+
+            Promise.all([movieData, peopleData]).then(res => {
+                console.log(res[1].data.moviePersonDataList)
+                this.movieList = res[0].data.movieDataList;
+                this.moviePeople = res[1].data.moviePersonDataList;
+                this.$apply();
+            })
+            wx.setNavigationBarTitle({
+                title: v
+            })
+
+
+            // 本地存储
+            let isHas = this.storage && this.storage.some(item => {
+                return item === v
+            })
+
+            if (!isHas) {
+                this.storage.push(v);
+                wx.setStorageSync('history', JSON.stringify(this.storage));
+            }
+            
+        }
+        
+    };
+
+    onLoad() {
+       let windowHeight = wx.getSystemInfoSync().windowHeight // 屏幕的高度
+        let windowWidth = wx.getSystemInfoSync().windowWidth // 屏幕的宽度
+        this.h = windowHeight * 750 / windowWidth - 45 - 30;
+    };
+
+    onShow() { 
+        try {
+            this.storage = JSON.parse(wx.getStorageSync('history')) || [];
+        } catch(e) {}
+        
+    };
+  }
+</script>
+
+<style lang='less'>
+    .search-box {
+        display: flex;
+        padding: 0 10px;
+        box-sizing: border-box;
+        height: 45px;
+        align-items: center;
+        justify-content: space-between;
+        input {
+            width: 70%;
+            height: 30px;
+            border-radius: 20px;
+            background: #eee;
+            padding-left: 20px;
+        }
+        .place {
+            color: #666;
+            font-size: 14px;
+        }
+        button {
+            width: 25%;
+            flex-shrink: 0;
+            margin-left: 10px;
+        }
+    }
+
+    .search-history {
+        padding: 15px 10px;
+        box-sizing: border-box;
+        z-index: 888;
+        .history-search {
+            color: #ccc;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .history-list {
+            display: flex;
+            flex-wrap: wrap;
+            test {
+                display: inline-block;
+                background: #eee;
+                color: #666;
+                height: 30px;
+                padding: 0 10px;
+                line-height: 30px;
+                margin-right: 10px;
+                text-align: center;
+                border-radius: 5px;
+                font-size: 12px;
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+    .search-list {
+        position: absolute;
+        top: 45px;
+        width: 100%;
+        background: #fff;
+        padding-left: 10px;
+        z-index: 9999;
+        view {
+            height: 45px;
+            line-height: 45px;
+            font-size: 14px;
+        }
+    }
+
+    .content {
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    .people {
+        padding: 10px;
+        box-sizing: border-box;
+        border-bottom: 1px solid #eee;
+        >view {
+            display: flex;
+            height: 45px;
+            align-items: center;
+            margin-bottom: 10px;
+            .peo-img {
+                width: 50px;
+                height: 50px;
+                border-radius: 100%;
+                image {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 100%;
+                }
+            }
+            .peo {
+                margin-left: 10px;
+                font-size: 14px;
+                color: #666;
+            }
+        }
+    }
+</style>

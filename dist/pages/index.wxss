@@ -1,0 +1,90 @@
+@import "./../components/Dialog/dialog.wxss";
+@import "./../components/Content/content.wxss";
+@import "./../components/Swiper/swiper.wxss";
+.section {
+  position: relative;
+  top: 45px;
+}
+.search-wrap {
+  width: 100%;
+  height: 45px;
+  padding: 0 10px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.search-wrap .search-box {
+  display: flex;
+  align-items: center;
+}
+.search-wrap .search-box .icon-search {
+  color: orange;
+  font-weight: bold;
+  margin-right: 10px;
+}
+.search-wrap .search-box .ipt-box {
+  flex: 1;
+}
+.search-wrap .search-list {
+  position: absolute;
+  top: 45px;
+  left: 0;
+}
+.nav-box {
+  display: flex;
+}
+.nav-box .navlist-item {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.nav-box .navlist-item .icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  line-height: 50px;
+  margin: 10px auto;
+  color: #fff;
+  font-size: 20px;
+}
+.nav-box .navlist-item .navlist-text {
+  font-size: 15px;
+  color: #666;
+}
+.choiceness {
+  padding: 10px;
+  box-sizing: border-box;
+}
+.choiceness .choiceness-title {
+  font-size: 20px;
+  color: #666;
+  margin-bottom: 20px;
+}
+.choiceness .choiceness-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.choiceness .choiceness-list .choiceness-list-item {
+  position: relative;
+  width: 48%;
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 5px;
+}
+.choiceness .choiceness-list .choiceness-list-item .video {
+  width: 100%;
+  height: 100px;
+}
+.choiceness .choiceness-list .choiceness-list-item .choiceness-img {
+  width: 100%;
+  height: 100px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+.choiceness .choiceness-list .choiceness-list-item .choiceness-img image {
+  width: 100%;
+  height: 100%;
+}

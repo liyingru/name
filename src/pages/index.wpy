@@ -1,0 +1,248 @@
+<!--  -->
+<template>
+  <view class='container'>
+    <view class="search-wrap">
+        <view class="search-box">
+          <text class="iconfont icon-search"></text>
+          <input type="text" placeholder="找影片、导演、演员、影评" class="ipt-box" @focus="gotoSearch">
+        </view>
+    </view>
+    <scroll-view class="section" scroll-y style='height:{{scroll_height}}rpx'>
+        <!-- banner -->
+      <Swiper :swiperData.sync="swiperData"/>
+      <!-- nav -->
+      <view class="nav-box">
+          <view class="navlist-item" @tap="con_dialog">
+            <view class="icon" style="background: #FFA27C">
+              <text class="iconfont icon-linedesign-18"></text>
+            </view>
+            <text class="navlist-text">海报日签</text>
+          </view>
+          <view class="navlist-item">
+            <view class="icon" style="background: #FEAC10">
+              <text class="iconfont icon-tequanmianfeiguanyinghd"></text>
+            </view>
+            <text class="navlist-text">免费观影</text>
+          </view>
+          <view class="navlist-item" @tap="gotoClassify">
+            <view class="icon" style="background: #56ACFF">
+              <text class="iconfont icon-zhaodian"></text>
+            </view>
+            <text class="navlist-text">找电影</text>
+          </view>
+      </view>
+
+      <!-- 今日精选视频 -->
+      <view class="choiceness">
+        <view class="choiceness-title">今日精选视频</view>
+        <view class="choiceness-list">
+            <repeat for="{{choiceness}}">
+                <view class="choiceness-list-item">
+                  <video src="{{item.videoInfo.videoUrl}}" class="video"></video>
+                  <view class="choiceness-desc">{{item.videoInfo.title}}</view>
+                </view>
+                
+            </repeat>
+        </view>
+      </view>
+      <!-- 这周影院有啥看 -->
+      <Content1 :weekData.sync="weekData"/>
+
+      <!-- 近期热播剧 -->
+      <Content2 :weekData.sync="recentData"/>
+      <!-- 近期综艺 -->
+      <Content3 :weekData.sync="play"/>
+    </scroll-view>
+
+    <Dialog :flag.sync="dialogShow"/>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+
+  import Dialog from '../components/Dialog/dialog';
+  import Content from '../components/Content/content';
+  import Swiper from '../components/Swiper/swiper';
+
+  export default class Example extends wepy.page {
+    config = {
+      navigationBarTitleText: "毒舌Pro",
+    };
+
+    data = {
+      swiperData: [],
+      choiceness: [],
+      weekData: [],
+      recentData: [],
+      play: [],
+      scroll_height: 0,
+      dialogShow: true
+    };
+
+    components = {
+      Swiper,
+      Content1: Content,
+      Content2: Content,
+      Content3: Content,
+      Dialog
+    };
+
+    methods = {
+      gotoSearch() {
+        wepy.navigateTo({
+          url: './search'
+        })
+      },
+      gotoClassify() {
+        wepy.navigateTo({
+          url: './classify'
+        })
+      },
+      con_dialog() {
+        this.dialogShow = false;
+      }
+    };
+
+    events = {
+      myClose() {
+        this.dialogShow = true;
+      }
+    };
+
+    onLoad() {
+      wepy.request({
+        url: 'https://dswxapp.dushemovie.com/dsmovieapi/ssl2/weixin_movie/list_weixin_banner/2',
+        method: 'POST',
+        data: {
+              position: 1,
+              userId: 5996621,
+              sign: '20b935453c4666cccfa020dcefc60e29'
+        }
+      }).then(res => {
+        this.swiperData = res.data.discoveryBannerList;
+        this.$apply();
+      })
+
+
+      wepy.request({
+        url: 'https://cdnapp.dushemovie.com/dsmovieapi/ssl2/video/list_videos/1?count=4&startIndex=0'
+      }).then(res => {
+        this.choiceness = res.data.videoDataList;
+        this.$apply();
+      })
+
+
+      wepy.request({
+        url: 'https://cdnapp.dushemovie.com/dsmovieapi/ssl2/weixin_movie/list_daily_recmd_movie_sheet/2?count=10&movieCount=5&position=2&startIndex=0'
+      }).then(res => {
+        this.weekData = res.data.movieSheetList[1];
+        this.recentData = res.data.movieSheetList[2];
+        this.play = res.data.movieSheetList[3]
+        this.$apply();
+      })
+
+      
+      let windowHeight = wx.getSystemInfoSync().windowHeight // 屏幕的高度
+      let windowWidth = wx.getSystemInfoSync().windowWidth // 屏幕的宽度
+      
+      this.scroll_height = windowHeight * 750 / windowWidth - 50 - 30;
+
+     };
+  }
+</script>
+
+<style lang='less'>
+  .section {
+    position: relative;
+    top: 45px;
+  }
+  .search-wrap {
+    width: 100%;
+    height: 45px;
+    padding: 0 10px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    .search-box {
+      display: flex;
+      align-items: center;
+      .icon-search {
+        color: orange;
+        font-weight: bold;
+        margin-right: 10px;
+      }
+      .ipt-box {
+        flex: 1;
+      }
+    }
+
+    .search-list {
+      position: absolute;
+      top: 45px;
+      left: 0;
+    }
+  }
+
+  .nav-box {
+    display: flex;
+    .navlist-item {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      box-sizing: border-box;
+      .icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+        line-height: 50px;
+        margin: 10px auto;
+        color: #fff;
+        font-size: 20px;
+      }
+      .navlist-text {
+        font-size: 15px;
+        color: #666;
+      }
+    }
+  }
+
+  .choiceness {
+    padding: 10px;
+    box-sizing: border-box;
+    .choiceness-title {
+      font-size: 20px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .choiceness-list {
+      display: flex;
+      flex-wrap: wrap;
+      .choiceness-list-item {
+        position: relative;
+        width: 48%;
+        font-size: 14px;
+        font-weight: bold;
+        margin-right: 5px;
+        .video {
+          width: 100%;
+          height: 100px;
+        }
+        
+        .choiceness-img {
+          width: 100%;
+          height: 100px;
+          margin: 0 auto;
+          margin-bottom: 10px;
+          image {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+</style>

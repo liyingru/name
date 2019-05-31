@@ -1,0 +1,69 @@
+
+  <view class="search-wrapper">
+      <view class="search-box">
+          <input type="text" placeholder="找影片、导演、演员、影评" auto-focus="true" placeholder-class="place" bindinput="iptFunc"/>
+          <button size="mini" bindtap="search" data-wpysearch-a="{{iptVal}}">搜索</button>
+
+          <view class="search-list" hidden="{{iptflag}}">
+              <block wx:for="{{iptArr}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+                  <view bindtap="search" data-wpysearch-a="{{item.movieInfo.title}}">{{item.movieInfo.title}}</view>
+              </block>
+          </view>
+      </view>
+      <view class="isShow" hidden="{{flag}}">
+          <view class="search-history" hidden="{{!storage.length}}">
+            <view class="history-search">历史搜索</view>
+            <view class="history-list">
+                <block wx:for="{{storage}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+                    <test bindtap="search" data-wpysearch-a="{{item}}">{{item}}</test>
+                </block>
+            </view>
+      </view>
+      <view class="search-history search-hot">
+          <view class="history-search hot-search">热门搜索</view>
+          <view class="history-list hot-list">
+              <block wx:for="{{hotList}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+                    <test bindtap="search" data-wpysearch-a="{{item}}">{{item}}</test>
+              </block>
+          </view>
+      </view>
+      </view>
+      <scroll-view class="content" hidden="{{!flag}}" scroll-y style="height: {{h}}rpx">
+          <view class="people"  wx:if="{{moviePeople.length > 0}}">
+              <view>影人</view>
+              <block wx:for="{{moviePeople}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+                  <view>
+                      <view class="peo-img"><image src="{{item.moviePersonInfo.img}}"/></view>
+                      <view class="peo">{{item.moviePersonInfo.name}}</view>
+                  </view>
+              </block>
+          </view>
+          <view>影视</view>
+          
+  <view class="con"  wx:if="{{$List$movieList.length}}">
+      <block wx:for="{{$List$movieList}}" wx:for-index="$List$index" wx:for-item="$List$item" wx:key="$List$key">
+            <view class="content-item">
+                  <view class="content-img">
+                    <image src="{{$List$item.movieInfo.img}}"/>
+                </view>
+                <view class="content-text">
+                    <text class="name">{{$List$item.movieInfo.title}}</text>
+                    <view class="type">
+                        {{$List$item.movieInfo.year}}
+                        <block wx:for="{{$List$item.movieInfo.type}}" wx:for-index="$List$index" wx:for-item="$List$item" wx:key="$List$key">
+                            <text>{{$List$item}}/ </text>
+                        </block>
+                    </view>
+                    <view class="people">
+                        <block wx:for="{{$List$item.actorBasicInfoList}}" wx:for-index="$List$index" wx:for-item="$List$val" wx:key="$List$key">
+                            <text>{{$List$val.name}}/</text>
+                        </block>
+                    </view>
+                </view>
+          </view>
+        </block>
+  </view>
+  <view  wx:else>暂无数据……</view>
+
+      </scroll-view>
+  </view>

@@ -1,0 +1,81 @@
+
+  <view class="container">
+      <view class="type-box">
+          <view class="type-item">
+              <view>
+                <text class="type-title">形式:</text>
+                
+  <scroll-view class="subtype" scroll-x>
+      <block wx:for="{{$Type1$allType}}" wx:for-index="$Type1$index" wx:for-item="$Type1$item" wx:key="$Type1$key">
+          <view class="{{$Type1$currentMovie === $Type1$index ? 'active' : ''}}" bindtap="$Type1$chooseMovie" data-wpychoosemovie-a="{{$Type1$item}}" data-wpychoosemovie-b="{{$Type1$index}}">{{$Type1$item}}</view>
+      </block>
+  </scroll-view>
+
+              </view>
+          </view>
+          <view class="type-item">
+              <view>
+                  <text class="type-title">地区: </text>
+                  
+  <scroll-view class="subtype" scroll-x>
+      <block wx:for="{{$Type2$allType}}" wx:for-index="$Type2$index" wx:for-item="$Type2$item" wx:key="$Type2$key">
+          <view class="{{$Type2$currentMovie === $Type2$index ? 'active' : ''}}" bindtap="$Type2$chooseMovie" data-wpychoosemovie-a="{{$Type2$item}}" data-wpychoosemovie-b="{{$Type2$index}}">{{$Type2$item}}</view>
+      </block>
+  </scroll-view>
+
+              </view>
+         </view>
+          <view class="type-item">
+              <view>
+                  <text class="type-title">类型:</text>
+              
+  <scroll-view class="subtype" scroll-x>
+      <block wx:for="{{$Type3$allType}}" wx:for-index="$Type3$index" wx:for-item="$Type3$item" wx:key="$Type3$key">
+          <view class="{{$Type3$currentMovie === $Type3$index ? 'active' : ''}}" bindtap="$Type3$chooseMovie" data-wpychoosemovie-a="{{$Type3$item}}" data-wpychoosemovie-b="{{$Type3$index}}">{{$Type3$item}}</view>
+      </block>
+  </scroll-view>
+
+              </view>
+         </view>
+          <view class="type-item">
+              <view>
+                <text class="type-title">特色: </text>
+                
+  <scroll-view class="subtype" scroll-x>
+      <block wx:for="{{$Type4$allType}}" wx:for-index="$Type4$index" wx:for-item="$Type4$item" wx:key="$Type4$key">
+          <view class="{{$Type4$currentMovie === $Type4$index ? 'active' : ''}}" bindtap="$Type4$chooseMovie" data-wpychoosemovie-a="{{$Type4$item}}" data-wpychoosemovie-b="{{$Type4$index}}">{{$Type4$item}}</view>
+      </block>
+  </scroll-view>
+
+              </view>
+         </view>
+      </view>
+      <scroll-view class="classify-list" scroll-y style="height:{{h}}rpx" bindscrolltolower="lower">
+          
+  <view class="con"  wx:if="{{$List$movieList.length}}">
+      <block wx:for="{{$List$movieList}}" wx:for-index="$List$index" wx:for-item="$List$item" wx:key="$List$key">
+            <view class="content-item">
+                  <view class="content-img">
+                    <image src="{{$List$item.movieInfo.img}}"/>
+                </view>
+                <view class="content-text">
+                    <text class="name">{{$List$item.movieInfo.title}}</text>
+                    <view class="type">
+                        {{$List$item.movieInfo.year}}
+                        <block wx:for="{{$List$item.movieInfo.type}}" wx:for-index="$List$index" wx:for-item="$List$item" wx:key="$List$key">
+                            <text>{{$List$item}}/ </text>
+                        </block>
+                    </view>
+                    <view class="people">
+                        <block wx:for="{{$List$item.actorBasicInfoList}}" wx:for-index="$List$index" wx:for-item="$List$val" wx:key="$List$key">
+                            <text>{{$List$val.name}}/</text>
+                        </block>
+                    </view>
+                </view>
+          </view>
+        </block>
+  </view>
+  <view  wx:else>暂无数据……</view>
+
+      </scroll-view>
+  </view>

@@ -1,0 +1,87 @@
+<!--  -->
+<template>
+  <view class='swiper-box'>
+      <swiper autoplay circular @change="change">
+          <repeat for="{{swiperData}}">
+              <swiper-item class="swiper-item">
+                  <image src="{{item.imageUrl}}"/>
+              </swiper-item>
+          </repeat>
+      </swiper>
+      <view class='dots'>
+        <repeat for="{{swiperData}}">
+            <view class="dot {{currentIndex === index ? 'active' : ''}}"></view>
+        </repeat>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  export default class Example extends wepy.component {
+    props = {
+        swiperData: Array
+    };
+
+    data = {
+        currentIndex: 0
+    };
+
+    components = {};
+
+    methods = {
+        change(e) {
+            this.currentIndex = e.detail.current;
+        }
+    };
+
+    events = {};
+
+    watch = {};
+
+    computed = {};
+
+    onLoad() { };
+
+    onShow() { };
+  }
+</script>
+
+<style lang='less'>
+    .swiper-box {
+        position: relative;
+        padding: 0 10px;
+        box-sizing: border-box;
+        .swiper-item {
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+            image {
+                width: 100%;
+                height: 100%;
+                border-radius: 5px;
+            }
+        }
+        .dots {
+            display: flex;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            margin-left: -75px;
+        }
+        .dot {
+            width: 20px;
+            height: 5px;
+            background: #fff;
+            margin-right: 10px;
+            &.active {
+                background: yellow;
+            }
+        }
+    }
+    .swiper-text {
+        position: absolute;
+        bottom: 10px;
+        color: #fff;
+    }
+</style>

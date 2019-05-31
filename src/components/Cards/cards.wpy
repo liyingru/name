@@ -1,0 +1,83 @@
+<!--  -->
+<template>
+  <view class='cards'>
+      <repeat for="{{cardsList}}">
+          <view class="cards-item" @tap="gotoCarsoul({{cardsList}}, {{index}})">
+              <image src="{{item.withWordsImageUrl}}" mode="widthFix"/>
+              <view class="cards-text">
+                  <text>{{item.day}}</text>
+                  <text class="status {{item.isSignIn ? 'active' : ''}}">{{item.isSignIn ? '已打卡' : '未打卡'}}</text>
+              </view>
+          </view>
+      </repeat>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  export default class Example extends wepy.component {
+    props = {
+        cardsList: Array
+    };
+
+    data = {};
+
+    components = {};
+
+    methods = {
+        gotoCarsoul(cardsList, key) {
+            this.$parent.$parent.globalData.cardsList = cardsList;
+            wepy.navigateTo({
+                url: '../pages/Carsoul?cur=' + key
+            })
+        }
+    };
+
+    events = {};
+
+    watch = {};
+
+    computed = {};
+
+    onLoad() { 
+        
+    };
+    
+    
+
+    onShow() { };
+  }
+</script>
+
+<style lang='less'>
+    .cards {
+        display: flex;
+        flex-wrap: wrap;
+        .cards-item {
+            width: 31%;
+            margin-right: 5px;
+            margin-bottom: 10px;
+            image {
+                width: 100%;
+                border-radius: 5px;
+            }
+            .cards-text {
+                display: flex;
+                justify-content: space-between;
+                font-size: 12px;
+                align-items: center;
+            }
+            .status {
+                padding: 0 5px;
+                text-align: center;
+                border: 1px solid #ccc;
+                flex-shrink: 0;
+                line-height: 28px;
+                &.active {
+                    background: #FFD200;
+                    color: #AA7A00;
+                }
+            }
+        }
+    }
+</style>

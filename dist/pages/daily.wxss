@@ -1,0 +1,11 @@
+@import "./../components/Cards/cards.wxss";
+.daily-wrapper {
+  padding: 10px;
+  box-sizing: border-box;
+}
+.daily-wrapper .daily-title {
+  text-align: center;
+  font-size: 15px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}

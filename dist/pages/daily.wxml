@@ -1,0 +1,19 @@
+
+  <view class="daily-wrapper">
+    <block wx:for="{{allData}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+      <view class="daily-title">{{index}}</view>
+      
+  <view class="cards">
+      <block wx:for="{{allData[index]}}" wx:for-index="$Cards$index" wx:for-item="$Cards$item" wx:key="$Cards$key">
+          <view class="cards-item" bindtap="$Cards$gotoCarsoul" data-com-index="{{index}}" data-wpygotocarsoul-a="{{allData[index]}}" data-wpygotocarsoul-b="{{$Cards$index}}">
+              <image src="{{$Cards$item.withWordsImageUrl}}" mode="widthFix"/>
+              <view class="cards-text">
+                  <text>{{$Cards$item.day}}</text>
+                  <text class="status {{$Cards$item.isSignIn ? 'active' : ''}}">{{$Cards$item.isSignIn ? '已打卡' : '未打卡'}}</text>
+              </view>
+          </view>
+      </block>
+  </view>
+
+    </block>
+  </view>

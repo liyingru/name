@@ -1,0 +1,68 @@
+<!--  -->
+<template>
+  <view class='detail-box'>
+      <view class="detail-img">
+        <image src="{{detailData.movieInfo.img}}" />
+      </view>
+      <view class="director">
+        <repeat for="{{detailData.directorBasicInfoList}}">
+          <text class="people">主演： {{item.name}}</text>
+        </repeat>
+      </view>
+      <view class="intro">{{detailData.movieInfo.intro}}</view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  export default class Emple extends wepy.page {
+    config = {
+      navigationBarTitleText: "详情页",
+    };
+
+    data = {
+      detailData: {}
+    };
+
+    components = {};
+
+    methods = {};
+
+    events = {};
+
+    watch = {};
+
+    computed = {};
+
+    onLoad(options) {
+        let itemData = JSON.parse(options.itemData);
+        wx.setNavigationBarTitle({
+            title: itemData.movieInfo.title
+        })
+        this.detailData = itemData;
+     };
+
+    onShow() { };
+  }
+</script>
+
+<style lang='less'>
+  .people {
+    font-size: 15px;
+    color: #666;
+    font-weight: bold;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  .intro {
+    font-size: 14px;
+    color: #333;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  .detail-img {
+    image {
+      width: 100%;
+    }
+  }
+</style>

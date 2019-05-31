@@ -1,0 +1,96 @@
+<!--  -->
+<template>
+  <view class="weekday">
+    <view class="weekday-title">{{weekData.name}}</view>
+    <scroll-view class="weekday-list" scroll-x>
+        <repeat for="{{weekData.movieDataList}}">
+            <view class="weekday-list-item" @tap="gotoDetail({{item}})">
+                <view class="weekday-img">
+                <image src="{{item.movieInfo.img}}" />
+                </view>
+                <view class="weekday-tit">{{item.movieInfo.title}}</view>
+                <view class="weekday-intro">{{item.movieInfo.intro}}</view>
+            </view>
+        </repeat>
+    </scroll-view>
+</view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  export default class Example extends wepy.component {
+    props = {
+        weekData: Object
+    };
+
+    data = {};
+
+    components = {};
+
+    methods = {
+        gotoDetail(itemData) {
+            wepy.navigateTo({
+                url: '../pages/detail?itemData=' + JSON.stringify(itemData)
+            })
+        }
+    };
+
+    events = {};
+
+    watch = {};
+
+    computed = {};
+
+    onLoad() { };
+
+    onShow() { };
+  }
+</script>
+
+<style lang='less'>
+     .weekday {
+    padding: 10px;
+    box-sizing: border-box;
+    .weekday-title {
+      font-size: 20px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .weekday-list {
+      white-space: nowrap;
+      .weekday-list-item {
+        display: inline-block;
+        margin-right: 5px;
+        text-align: center;
+        font-size: 12px;
+        .weekday-img {
+          width: 80px;
+          height: 100px;
+          margin: 0 auto;
+          border-radius: 5px;
+          image {
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+          }
+        }
+        .weekday-intro {
+          width: 100px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+        .weekday-tit {
+          font-weight: bold;
+          color: #000;
+          margin-bottom: 5px;
+          font-size: 15px;
+          width: 100px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+</style>

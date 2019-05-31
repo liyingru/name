@@ -1,0 +1,162 @@
+<!--  -->
+<template>
+  <view class='container'>
+      <view class="type-box">
+          <view class="type-item">
+              <view>
+                <text class="type-title">形式:</text>
+                <Type1 :allType.sync="mediaList" type="media"/>
+              </view>
+          </view>
+          <view class="type-item">
+              <view>
+                  <text class="type-title">地区: </text>
+                  <Type2 :allType.sync="areaList" type="area"/>
+              </view>
+         </view>
+          <view class="type-item">
+              <view>
+                  <text class="type-title">类型:</text>
+              <Type3 :allType.sync="typeList" type="type"/>
+              </view>
+         </view>
+          <view class="type-item">
+              <view>
+                <text class="type-title">特色: </text>
+                <Type4 :allType.sync="featureList" type="feature"/>
+              </view>
+         </view>
+      </view>
+      <scroll-view class="classify-list" scroll-y style='height:{{h}}rpx' @scrolltolower="lower">
+          <List :movieList.sync="conList"/>
+      </scroll-view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import Type from '../components/Type/type';
+  import List from '../components/List/list';
+  export default class Example extends wepy.page {
+    config = {
+      navigationBarTitleText: "分类"
+    };
+
+    data = {
+        areaList: [],
+        featureList: [],
+        mediaList: [],
+        typeList: [],
+        conList: [],
+        selected: {
+            area: '全部',
+            feature: '全部',
+            media: '电影',
+            type: '全部'
+        },
+        h: 0,
+        count: 20
+    };
+
+    components = {
+        Type1: Type,
+        Type2: Type,
+        Type3: Type,
+        Type4: Type,
+        List
+    };
+
+    methods = {
+        // 上拉加载
+        lower() {
+            wepy.showLoading({
+                title: '正在拼命加载中……'
+            })
+            this.count += 5;
+            this.initData();
+            wepy.hideLoading();
+        }
+    };
+    
+
+    events = {
+        // 点击切换电影类型
+        mySelected(type) {
+            this.selected[type.t] = type.m;
+            this.initData();
+        }
+    };
+    // 下拉刷新
+    onPullDownRefresh() {
+        wx.showNavigationBarLoading()   //在标题栏显示下拉刷新
+        this.count = 20;
+        this.initData();
+        setTimeout(() => {
+            wx.hideNavigationBarLoading() //完成停止加载
+            wx.stopPullDownRefresh() //停止下拉刷新
+        }, 2000);
+        
+
+    }
+    // 发起请求
+    fetchData(url) {
+        return wepy.request({
+            url: url
+        })
+    }
+
+    // 请求电影列表
+    initData() {
+        this.fetchData(`https://cdnapp.dushemovie.com/dsmovieapi/ssl2/movie/list_movie_by_type/1?area=${this.selected['area']}&count=${this.count}&feature=${this.selected['feature']}&media=${this.selected['media']}&startIndex=0&type=${this.selected['type']}`).then(res => {
+            this.conList = res.data.movieDataList;
+            this.$apply();
+        })
+    }
+
+    onLoad() { 
+        // 请求分类
+        this.fetchData('https://cdnapp.dushemovie.com/dsmovieapi/ssl2/movie/list_type/1').then(res => {
+            let { typeList, featureList, mediaList, areaList } = res.data.movieTypeData;
+            this.typeList = typeList;
+            this.featureList = featureList;
+            this.mediaList = mediaList;
+            this.areaList = areaList;
+            this.$apply();
+        })
+        // 加载电影列表
+        this.initData();
+        
+        // 适配所有屏幕的scroll-view高度
+        let windowHeight = wx.getSystemInfoSync().windowHeight // 屏幕的高度
+        let windowWidth = wx.getSystemInfoSync().windowWidth // 屏幕的宽度
+        this.h = windowHeight * 750 / windowWidth - 180 - 30;
+    };
+  }
+</script>
+
+<style lang='less'>
+    .type-box {
+        padding: 10px;
+        box-sizing: border-box;
+        position: fixed;
+        top: 0;
+        z-index: 99999;
+        left: 0;
+        background: #fff;
+    }
+    .type-item {
+       margin-top: 10px;
+        >view {
+            display: flex;
+        }
+    }
+    .type-title {
+        font-size: 14px;
+        color: #666;
+        flex-shrink: 0;
+    }
+    .classify-list {
+        position: relative;
+        top: 160px;
+    }
+</style>

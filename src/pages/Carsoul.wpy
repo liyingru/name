@@ -1,0 +1,109 @@
+<!--  -->
+<template>
+  <view class='carsoul'>
+      <swiper current="{{cur}}">
+        <repeat for="{{cardsList}}">
+          <swiper-item>
+            <image src="{{item.withWordsImageUrl}}" class="car-img" mode="widthFix"/>
+          </swiper-item>
+        </repeat>
+      </swiper>
+      <view class="btns">
+        <button size="mini" @tap="downImg">下载</button>
+        <view>{{tip}}</view>
+        <button size="mini" open-type="share">分享</button>
+      </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  export default class Exp extends wepy.page {
+    config = {
+      navigationBarTitleText: "历史日签",
+    };
+
+    data = {
+      cardsList: [],
+      cur: 0,
+      tip: ''
+    };
+
+    components = {};
+
+    methods = {
+      // 下载图片
+      downImg() {
+        let imgUrl = this.cardsList[this.cur].downloadImageUrl;
+
+        const downloadTask = wx.downloadFile({
+          url: imgUrl,
+          success(res) {
+            if (res.statusCode === 200) {
+              wx.saveImageToPhotosAlbum({
+                filePath: res.tempFilePath,
+                success(res) {
+                  wx.showToast({
+                    title: '保存图片成功……'
+                  })
+                },
+                faile() {
+                  wx.showToast({
+                    title: '保存图片失败……'
+                  })
+                }
+              })
+            }
+          }
+        })
+        // // 进度条
+        downloadTask.onProgressUpdate((res) => {
+          if (res.progress === 100) {
+            this.tip = '';
+            this.$apply();
+          } else {
+            this.tip = res.progress + '%';
+            this.$apply();
+          }
+        })
+
+      }
+    };
+
+    events = {};
+
+    watch = {};
+
+    computed = {};
+
+    onLoad(options) {
+        this.cardsList = this.$parent.globalData.cardsList;
+        this.cur = options.cur;
+    };
+
+    onShow() { };
+  }
+</script>
+
+<style lang='less'>
+  .carsoul {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    swiper {
+      width: 100%;
+      height: 80%;
+      image {
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+      }
+    }
+    .btns {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+  }
+</style>

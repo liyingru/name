@@ -1,0 +1,12 @@
+
+  <view class="detail-box">
+      <view class="detail-img">
+        <image src="{{detailData.movieInfo.img}}"/>
+      </view>
+      <view class="director">
+        <block wx:for="{{detailData.directorBasicInfoList}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+          <text class="people">主演： {{item.name}}</text>
+        </block>
+      </view>
+      <view class="intro">{{detailData.movieInfo.intro}}</view>
+  </view>

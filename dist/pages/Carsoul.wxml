@@ -1,0 +1,15 @@
+
+  <view class="carsoul">
+      <swiper current="{{cur}}">
+        <block wx:for="{{cardsList}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+          <swiper-item>
+            <image src="{{item.withWordsImageUrl}}" class="car-img" mode="widthFix"/>
+          </swiper-item>
+        </block>
+      </swiper>
+      <view class="btns">
+        <button size="mini" bindtap="downImg">下载</button>
+        <view>{{tip}}</view>
+        <button size="mini" open-type="share">分享</button>
+      </view>
+  </view>

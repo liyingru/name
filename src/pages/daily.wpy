@@ -1,0 +1,135 @@
+<!--  -->
+<template>
+  <view class='daily-wrapper'>
+    <repeat for="{{allData}}">
+      <view class="daily-title">{{index}}</view>
+      <Cards :cardsList.sync="allData[index]"/>
+    </repeat>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import Cards from '../components/Cards/cards';
+  import { connect } from 'wepy-redux';
+  import { update } from '../store/actions';
+  @connect({}, {
+    update
+  })
+  export default class Example extends wepy.page {
+    config = {
+      navigationBarTitleText: "历史日签",
+    };
+
+    data = {
+      allData: {},
+      month: new Date().getMonth() + 2,
+      year: new Date().getFullYear(),
+      page: 8
+    };
+
+    components = {
+      Cards
+    };
+
+    // 上拉加载更多
+    onReachBottom() {
+      this.month = --this.month;
+      this.page = --this.page;
+      if (this.page <= 0) {
+        wepy.hideLoading();
+      } else {
+        wepy.showLoading({
+          title: '正在拼命加载中……'
+        })
+
+        if (!this.month) {
+          this.month = 12;
+          this.year = --this.year
+        }
+        this.fetchData(this.month, this.year).then(res => {
+          this.solveData(res.data.dailyRecmdCardList)
+          wepy.hideLoading();
+        })
+      }
+    }
+
+    methods = {
+      
+    };
+
+    events = {};
+
+    watch = {};
+
+    computed = {};
+    // 发起请求
+    fetchData(month, year) {
+      return wepy.request({
+        url: 'https://dswxapp.dushemovie.com/dsmovieapi/ssl2/weixin_recmd/list_daily_card/1',
+        method: 'POST',
+        data: {
+          month,
+          userId: 5933871,
+          year,
+          sign: '2dd2fc0647b6fb792f5d9005821dd9b4'
+        }
+      })
+    }
+
+    // 初始渲染数据
+    initData() {
+        for(let i = 0; i < 3; i++) {
+          this.page = --this.page;
+          this.month = --this.month;
+          if (!this.month) {
+            this.month = 12;
+            this.year = --this.year;
+          }
+          this.fetchData(this.month, this.year).then(res => {
+            this.solveData(res.data.dailyRecmdCardList)
+          })
+        }
+    }
+    // 下拉刷新
+    onPullDownRefresh() {
+      this.month = new Date().getMonth() + 2;
+      this.year = new Date().getFullYear();
+      this.page = 8;
+      this.allData = {};
+      this.initData();
+    }
+    // 处理数据
+    solveData(list) {
+      let arr = list[0].day.split('-');
+      let key = arr[0] + '年' + arr[1] + '月';
+      let newArr = list.map(item => {
+        item.day = item.day.slice(5);
+        return item;
+      })
+      this.allData[key] = newArr;
+      setTimeout(() => {
+        console.log(this.allData)
+      }, 1000);
+      this.$apply();
+    }
+    onLoad() {
+        this.initData();
+    };
+
+    onShow() { };
+  }
+</script>
+
+<style lang='less'>
+  .daily-wrapper {
+    padding: 10px;
+    box-sizing: border-box;
+    .daily-title {
+      text-align: center;
+      font-size: 15px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+  }
+</style>

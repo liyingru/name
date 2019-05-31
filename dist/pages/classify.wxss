@@ -1,0 +1,26 @@
+@import "./../components/List/list.wxss";
+@import "./../components/Type/type.wxss";
+.type-box {
+  padding: 10px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  z-index: 99999;
+  left: 0;
+  background: #fff;
+}
+.type-item {
+  margin-top: 10px;
+}
+.type-item > view {
+  display: flex;
+}
+.type-title {
+  font-size: 14px;
+  color: #666;
+  flex-shrink: 0;
+}
+.classify-list {
+  position: relative;
+  top: 160px;
+}

@@ -1,0 +1,16 @@
+.people {
+  font-size: 15px;
+  color: #666;
+  font-weight: bold;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.intro {
+  font-size: 14px;
+  color: #333;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.detail-img image {
+  width: 100%;
+}

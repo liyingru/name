@@ -1,0 +1,63 @@
+<!--  -->
+<template>
+  <scroll-view class='subtype' scroll-x>
+      <repeat for="{{allType}}">
+          <view class="{{currentMovie === index ? 'active' : ''}}" @tap="chooseMovie({{item}}, {{index}})">{{item}}</view>
+      </repeat>
+  </scroll-view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  export default class Example extends wepy.component {
+    props = {
+        allType: Array,
+        type: String
+    };
+
+    data = {
+        currentMovie: 0
+    };
+
+    components = {};
+
+    methods = {
+        chooseMovie(movie, key) {
+            this.currentMovie = key;
+            this.$emit('mySelected', {
+                t: this.type,
+                m: movie
+            });
+        }
+    };
+
+    events = {};
+
+    watch = {};
+
+    computed = {};
+
+    onLoad() {
+
+     };
+
+    onShow() { };
+  }
+</script>
+
+<style lang='less'>
+    .subtype {
+        white-space: nowrap;
+        font-size: 14px;
+        width: 300px;
+        view {
+            margin-right: 10px;
+            flex-shrink: 0;
+            display: inline-block;
+            padding: 0 10px;
+            &.active {
+                color: #AC8943;
+            }
+        }
+    }
+</style>

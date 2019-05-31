@@ -1,0 +1,34 @@
+.con {
+  padding: 10px;
+  box-sizing: border-box;
+}
+.content-item {
+  display: flex;
+  margin-bottom: 10px;
+}
+.content-img {
+  width: 80px;
+  height: 100px;
+  margin-right: 15px;
+}
+.content-img image {
+  width: 100%;
+  height: 100%;
+}
+.content-text {
+  flex: 1;
+  color: #ccc;
+  font-size: 12px;
+}
+.content-text .name {
+  color: #000;
+  font-size: 15px;
+}
+.content-text .type,
+.content-text .people {
+  margin-top: 5px;
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

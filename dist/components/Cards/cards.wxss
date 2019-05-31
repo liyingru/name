@@ -1,0 +1,30 @@
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+.cards .cards-item {
+  width: 31%;
+  margin-right: 5px;
+  margin-bottom: 10px;
+}
+.cards .cards-item image {
+  width: 100%;
+  border-radius: 5px;
+}
+.cards .cards-item .cards-text {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  align-items: center;
+}
+.cards .cards-item .status {
+  padding: 0 5px;
+  text-align: center;
+  border: 1px solid #ccc;
+  flex-shrink: 0;
+  line-height: 28px;
+}
+.cards .cards-item .status.active {
+  background: #FFD200;
+  color: #AA7A00;
+}
